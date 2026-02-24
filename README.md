@@ -125,17 +125,23 @@ ORDER BY t.carbonFootprint ASC
 This project is licensed under the [BSD-3 Clause License](LICENSE) - see the LICENSE file for details.
 
 ## Citation
-Please cite our [paper](https://arxiv.org/abs/2505.13343) as follows:
+Please cite our [paper](https://doi.org/10.1145/3711875.3736685) as follows:
 
 ```bibtex
-@misc{mrm3,
-      title={MRM3: Machine Readable ML Model Metadata}, 
-      author={Andrej Čop and Blaž Bertalanič and Marko Grobelnik and Carolina Fortuna},
-      year={2025},
-      eprint={2505.13343},
-      archivePrefix={arXiv},
-      primaryClass={cs.LG},
-      url={https://arxiv.org/abs/2505.13343}, 
+@inproceedings{10.1145/3711875.3736685,
+author = {\v{C}op, Andrej and Bertalani\v{c}, Bla\v{z} and Grobelnik, Marko and Fortuna, Carolina},
+title = {MRM3: Machine Readable ML Model Metadata},
+year = {2025},
+isbn = {9798400714535},
+publisher = {Association for Computing Machinery},
+address = {New York, NY, USA},
+url = {https://doi.org/10.1145/3711875.3736685},
+doi = {10.1145/3711875.3736685},
+booktitle = {Proceedings of the 23rd Annual International Conference on Mobile Systems, Applications and Services},
+pages = {741–746},
+numpages = {6},
+location = {Hilton Anaheim, Anaheim, CA, USA},
+series = {MobiSys '25}
 }
 ```
 
