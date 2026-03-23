@@ -1,0 +1,318 @@
+@prefix mrm3: <https://raw.githubusercontent.com/sensorlab/MRM3/refs/heads/main/ontology_serialization/mrm3.ttl#> .
+@prefix rdf:  <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:  <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+
+mrm3: a owl:Ontology ;
+    rdfs:label "Machine-readable ML model metadata (MRM3)" ;
+    rdfs:comment "A schema for structuring machine learning model metadata in a knowledge graph format, capturing relationships between models, datasets, training processes, and inference characteristics" .
+
+mrm3:Model a owl:Class ;
+    rdfs:label "Model" .
+
+mrm3:ModelInference a owl:Class ;
+    rdfs:label "Model Inference" ;
+    rdfs:comment "Performance metrics and resource requirements for model inference operations in the knowledge graph" .
+
+mrm3:ModelTraining a owl:Class ;
+    rdfs:label "Model Training" ;
+    rdfs:comment "Comprehensive information about model training process and outcomes" .
+
+mrm3:ModelArchitecture a owl:Class ;
+    rdfs:label "Model Architecture" ;
+    rdfs:comment "Information about the model's architectural design and interpretability characteristics" .
+
+mrm3:Dataset a owl:Class ;
+    rdfs:label "Dataset" ;
+    rdfs:comment "Essential information about the dataset used to train the model" .
+
+mrm3:Service a owl:Class ;
+    rdfs:label "Service" ;
+    rdfs:comment "Service node information in the knowledge graph that this model provides" .
+
+mrm3:Device a owl:Class ;
+    rdfs:label "Device" .
+
+mrm3:Parameters a owl:Class ;
+    rdfs:label "Parameters" ;
+    rdfs:comment "Model parameters and training configuration" .
+
+mrm3:Hyperparameters a owl:Class ;
+    rdfs:label "Hyperparameters" ;
+    rdfs:comment "Model-specific hyperparameters used during training" .
+
+mrm3:ProblemType a owl:Class ;
+    rdfs:label "Problem Type" ;
+    rdfs:comment "Type of machine learning problem (e.g., 'Regression', 'Classification', 'Clustering')" .
+
+mrm3:INFERENCE_ON a owl:ObjectProperty ;
+    rdfs:domain mrm3:Model ;
+    rdfs:range mrm3:ModelInference ;
+    rdfs:label "inference on" ;
+    rdfs:comment "Performance metrics and resource requirements for model inference operations in the knowledge graph" .
+
+mrm3:TRAINS_ON a owl:ObjectProperty ;
+    rdfs:domain mrm3:Model ;
+    rdfs:range mrm3:ModelTraining ;
+    rdfs:label "trains on" ;
+    rdfs:comment "Comprehensive information about model training process and outcomes" .
+
+mrm3:UTILIZES a owl:ObjectProperty ;
+    rdfs:domain mrm3:Model ;
+    rdfs:range mrm3:ModelArchitecture ;
+    rdfs:label "utilizes" ;
+    rdfs:comment "Information about the model's architectural design and interpretability characteristics" .
+
+mrm3:TRAINED_ON a owl:ObjectProperty ;
+    rdfs:domain mrm3:Model ;
+    rdfs:range mrm3:Dataset ;
+    rdfs:label "trained on" ;
+    rdfs:comment "Essential information about the dataset used to train the model" .
+
+mrm3:PROVIDES a owl:ObjectProperty ;
+    rdfs:domain mrm3:Model ;
+    rdfs:range mrm3:Service ;
+    rdfs:label "provides" ;
+    rdfs:comment "Service node information in the knowledge graph that this model provides" .
+
+mrm3:RUNS_ON a owl:ObjectProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (mrm3:ModelInference mrm3:ModelTraining)
+    ] ;
+    rdfs:range mrm3:Device ;
+    rdfs:label "runs on" .
+
+mrm3:CONTAINS a owl:ObjectProperty ;
+    rdfs:domain mrm3:ModelTraining ;
+    rdfs:range mrm3:Parameters ;
+    rdfs:label "contains" ;
+    rdfs:comment "Model parameters and training configuration" .
+
+mrm3:USES a owl:ObjectProperty ;
+    rdfs:domain mrm3:ModelTraining ;
+    rdfs:range mrm3:Hyperparameters ;
+    rdfs:label "uses" .
+
+mrm3:SOLUTION_FOR a owl:ObjectProperty ;
+    rdfs:domain mrm3:Service ;
+    rdfs:range mrm3:ProblemType ;
+    rdfs:label "solution for" .
+
+mrm3:HAS_HYPERPARAMETERS a owl:ObjectProperty ;
+    rdfs:domain mrm3:Parameters ;
+    rdfs:range mrm3:Hyperparameters ;
+    rdfs:label "has hyperparameters" ;
+    rdfs:comment "Model-specific hyperparameters used during training" .
+
+mrm3:name a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (mrm3:Model mrm3:Dataset mrm3:Service mrm3:ProblemType)
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:label "name" .
+
+mrm3:version a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (mrm3:Model mrm3:Dataset)
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:label "version" ;
+    rdfs:comment "Version identifier of the model" .
+
+mrm3:dateCreated a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (mrm3:Model mrm3:Dataset)
+    ] ;
+    rdfs:range xsd:date ;
+    rdfs:label "date created";
+    rdfs:comment "The date when the model was created or trained, in ISO 8601 format" .
+
+mrm3:description a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (mrm3:Model mrm3:Dataset)
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:label "description" .
+
+mrm3:author a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (mrm3:Model mrm3:Dataset)
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:label "author" ;
+    rdfs:comment "The individual or organization responsible for creating and training the model" .
+
+mrm3:license a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (mrm3:Model mrm3:Dataset)
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:label "license" .
+
+mrm3:size a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (mrm3:Model mrm3:Dataset)
+    ] ;
+    rdfs:range xsd:integer ;
+    rdfs:label "size" .
+
+mrm3:type a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (mrm3:ModelArchitecture mrm3:Device mrm3:ProblemType)
+    ] ;
+    rdfs:range xsd:string ;
+    rdfs:label "type" .
+
+mrm3:energyConsumptionCPU a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (mrm3:ModelInference mrm3:ModelTraining)
+    ] ;
+    rdfs:range xsd:float ;
+    rdfs:label "energy consumption CPU" .
+
+mrm3:energyConsumptionGPU a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (mrm3:ModelInference mrm3:ModelTraining)
+    ] ;
+    rdfs:range xsd:float ;
+    rdfs:label "energy consumption GPU" .
+
+mrm3:carbonFootprint a owl:DatatypeProperty ;
+    rdfs:domain [
+        a owl:Class ;
+        owl:unionOf (mrm3:ModelInference mrm3:ModelTraining)
+    ] ;
+    rdfs:range xsd:float ;
+    rdfs:label "carbon footprint" .
+
+mrm3:latency a owl:DatatypeProperty ;
+    rdfs:domain mrm3:ModelInference ;
+    rdfs:range xsd:float ;
+    rdfs:label "latency" ;
+    rdfs:comment "Average time per inference request (seconds)" .
+
+mrm3:flops a owl:DatatypeProperty ;
+    rdfs:domain mrm3:ModelInference ;
+    rdfs:range xsd:integer ;
+    rdfs:label "flops" ;
+    rdfs:comment "Number of floating point operations per inference" .
+
+mrm3:batchSize a owl:DatatypeProperty ;
+    rdfs:domain mrm3:ModelInference ;
+    rdfs:range xsd:integer ;
+    rdfs:label "batch size" ;
+    rdfs:comment "Number of samples processed simultaneously during inference" .
+
+# "Map evaluationMetrics" from the diagram is modeled as JSON.
+mrm3:evaluationMetrics a owl:DatatypeProperty ;
+    rdfs:domain mrm3:ModelTraining ;
+    rdfs:range rdf:JSON ;
+    rdfs:label "evaluation metrics" ;
+    rdfs:comment "Statistical measures of model performance" .
+
+mrm3:explainability a owl:DatatypeProperty ;
+    rdfs:domain mrm3:ModelArchitecture ;
+    rdfs:range xsd:string ;
+    rdfs:label "explainability" ;
+    rdfs:comment "Describes the model's interpretability characteristics and methods available for explaining its decisions" .
+
+mrm3:processor a owl:DatatypeProperty ;
+    rdfs:domain mrm3:Device ;
+    rdfs:range xsd:string ;
+    rdfs:label "processor" .
+
+mrm3:cores a owl:DatatypeProperty ;
+    rdfs:domain mrm3:Device ;
+    rdfs:range xsd:integer ;
+    rdfs:label "cores" .
+
+mrm3:graphicsCard a owl:DatatypeProperty ;
+    rdfs:domain mrm3:Device ;
+    rdfs:range xsd:string ;
+    rdfs:label "graphics card" .
+
+mrm3:memoryCapacity a owl:DatatypeProperty ;
+    rdfs:domain mrm3:Device ;
+    rdfs:range xsd:float ;
+    rdfs:label "memory capacity" .
+
+mrm3:splitType a owl:DatatypeProperty ;
+    rdfs:domain mrm3:Parameters ;
+    rdfs:range xsd:string ;
+    rdfs:label "split type" ;
+    rdfs:comment "Method used for splitting training data (e.g., 'KFold')" .
+
+mrm3:optimizer a owl:DatatypeProperty ;
+    rdfs:domain mrm3:Parameters ;
+    rdfs:range xsd:string ;
+    rdfs:label "optimizer" ;
+    rdfs:comment "Optimization algorithm used for hyperparameter tuning" .
+
+mrm3:id a owl:DatatypeProperty ;
+    rdfs:domain mrm3:Hyperparameters ;
+    rdfs:range xsd:string ;
+    rdfs:label "id" .
+
+# "Map hyperparameters" from the diagram is modeled as JSON.
+mrm3:hyperparameters a owl:DatatypeProperty ;
+    rdfs:domain mrm3:Hyperparameters ;
+    rdfs:range rdf:JSON ;
+    rdfs:label "hyperparameters" ;
+    rdfs:comment "Model-specific hyperparameters used during training" .
+
+mrm3:purpose a owl:DatatypeProperty ;
+    rdfs:domain mrm3:Service ;
+    rdfs:range xsd:string ;
+    rdfs:label "purpose" .
+
+mrm3:minAccuracy a owl:DatatypeProperty ;
+    rdfs:domain mrm3:Service ;
+    rdfs:range xsd:float ;
+    rdfs:label "min accuracy" .
+
+mrm3:maxLatency a owl:DatatypeProperty ;
+    rdfs:domain mrm3:Service ;
+    rdfs:range xsd:float ;
+    rdfs:label "max latency" .
+
+mrm3:path a owl:DatatypeProperty ;
+    rdfs:domain mrm3:Model ;
+    rdfs:range xsd:string ;
+    rdfs:label "path" ;
+    rdfs:comment "File system path or URI where the model is stored" .
+
+mrm3:numOfRuns a owl:DatatypeProperty ;
+    rdfs:domain mrm3:ModelInference ;
+    rdfs:range xsd:integer ;
+    rdfs:label "number of runs" ;
+    rdfs:comment "Number of inference runs used for statistics" .
+
+mrm3:totalTime a owl:DatatypeProperty ;
+    rdfs:domain mrm3:ModelInference ;
+    rdfs:range xsd:float ;
+    rdfs:label "total time" ;
+    rdfs:comment "Total duration of all inference runs (seconds)" .
+
+mrm3:fitTime a owl:DatatypeProperty ;
+    rdfs:domain mrm3:ModelTraining ;
+    rdfs:range xsd:float ;
+    rdfs:label "fit time" ;
+    rdfs:comment "Time taken to fit the model on training data, in seconds" .
+
+mrm3:totalTrainTime a owl:DatatypeProperty ;
+    rdfs:domain mrm3:ModelTraining ;
+    rdfs:range xsd:float ;
+    rdfs:label "total train time" ;
+    rdfs:comment "Total time for the complete training process (seconds)" .
