@@ -282,10 +282,10 @@ mrm3:minAccuracy a owl:DatatypeProperty ;
     rdfs:range xsd:float ;
     rdfs:label "min accuracy" .
 
-mrm3:maxLatency a owl:DatatypeProperty ;
+mrm3:minLatency a owl:DatatypeProperty ;
     rdfs:domain mrm3:Service ;
     rdfs:range xsd:float ;
-    rdfs:label "max latency" .
+    rdfs:label "min latency" .
 
 mrm3:path a owl:DatatypeProperty ;
     rdfs:domain mrm3:Model ;
